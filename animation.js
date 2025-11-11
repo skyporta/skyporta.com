@@ -2,6 +2,53 @@
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ========== WELCOME GREETING OVERLAY ==========
+(function(){
+  const overlay = document.getElementById('welcomeOverlay');
+  const closeBtn = document.getElementById('welcomeClose');
+  const startBtn = document.getElementById('welcomeBtn');
+
+  if(!overlay) return;
+
+  // Check if user has already seen the welcome (using sessionStorage for this session only)
+  const hasSeenWelcome = sessionStorage.getItem('skyporta_welcome_shown');
+
+  if(!hasSeenWelcome) {
+    // Show the overlay on first load
+    overlay.classList.remove('hidden');
+    sessionStorage.setItem('skyporta_welcome_shown', 'true');
+  } else {
+    // Hide it if already shown this session
+    overlay.classList.add('hidden');
+  }
+
+  // Close button handler
+  function closeWelcome() {
+    overlay.classList.add('hidden');
+    // After animation completes, remove from DOM for cleaner memory
+    setTimeout(() => {
+      overlay.style.display = 'none';
+    }, 400);
+  }
+
+  closeBtn.addEventListener('click', closeWelcome);
+  startBtn.addEventListener('click', closeWelcome);
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+      closeWelcome();
+    }
+  });
+
+  // Close when clicking outside the modal
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) {
+      closeWelcome();
+    }
+  });
+})();
+
 // ========== HERO SECTION ANIMATIONS ==========
 
 // Hero background slow pan
