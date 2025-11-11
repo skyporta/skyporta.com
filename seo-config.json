@@ -1,0 +1,104 @@
+{
+  "seoConfig": {
+    "site": {
+      "name": "SkyPorta",
+      "url": "https://skyporta.com",
+      "description": "Global leaders in air and land cargo logistics. Secure, efficient, and reliable freight transportation worldwide.",
+      "language": "en",
+      "locale": "en_US"
+    },
+    "creator": {
+      "name": "Quick Red Tech",
+      "role": "Web Designer & Developer",
+      "note": "Quick Red Tech is the creator and builder of this website, not the owner"
+    },
+    "owner": {
+      "name": "QRTQuick",
+      "role": "Site Builder"
+    },
+    "keywords": [
+      "cargo logistics",
+      "air freight",
+      "land transportation",
+      "cargo shipping",
+      "freight transport",
+      "commercial cargo",
+      "private charter",
+      "express delivery",
+      "international shipping"
+    ],
+    "pages": {
+      "home": {
+        "title": "SkyPorta - Global Air & Land Cargo Logistics",
+        "description": "Leading multinational air and land transportation company specializing in commercial cargo, private charter, and regional airliners.",
+        "keywords": "cargo, logistics, freight, transportation, shipping",
+        "canonical": "https://skyporta.com"
+      },
+      "about": {
+        "title": "About SkyPorta - Cargo & Logistics Leader",
+        "description": "Learn about SkyPorta, a leading multinational air and land transportation company.",
+        "keywords": "about, company, cargo logistics"
+      },
+      "services": {
+        "title": "SkyPorta Services - Air & Land Cargo Solutions",
+        "description": "Explore our professional air cargo, land transport, and express delivery services.",
+        "keywords": "services, air cargo, land transport, express delivery"
+      },
+      "contact": {
+        "title": "Contact SkyPorta - Get a Quote",
+        "description": "Contact SkyPorta for inquiries, quotes, and partnership opportunities.",
+        "keywords": "contact, quote, inquiry"
+      }
+    },
+    "social": {
+      "facebook": {
+        "url": "https://facebook.com/skyporta",
+        "handle": "@SkyPortaLogistics"
+      },
+      "twitter": {
+        "url": "https://twitter.com/skyporta",
+        "handle": "@SkyPorta"
+      },
+      "linkedin": {
+        "url": "https://linkedin.com/company/skyporta",
+        "handle": "SkyPorta"
+      }
+    },
+    "contact": {
+      "email": "info@skyporta.com",
+      "phone": "+1 (555) 123-4567",
+      "address": "Global Headquarters"
+    },
+    "performance": {
+      "targetLoadTime": "< 2 seconds",
+      "targetFPS": 60,
+      "imageOptimization": true,
+      "minificationEnabled": true,
+      "cdnEnabled": true
+    },
+    "security": {
+      "ssl": true,
+      "csrfProtection": false,
+      "htaccessConfigured": false
+    },
+    "analytics": {
+      "googleAnalytics": true,
+      "googleSearchConsole": true,
+      "trackingId": "UA-XXXXXXXXX-X"
+    },
+    "structured_data": {
+      "schema_type": "Organization",
+      "business_type": "Transportation, Logistics & Storage",
+      "services": [
+        "Air Cargo Transportation",
+        "Land Freight Transport",
+        "Express Delivery"
+      ]
+    },
+    "crawling": {
+      "sitemap": "/sitemap.xml",
+      "robotsTxt": "/robots.txt",
+      "feedUrl": "/feed.xml"
+    }
+  }
+}

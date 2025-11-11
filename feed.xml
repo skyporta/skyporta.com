@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>SkyPorta - Global Air & Land Cargo Logistics</title>
+    <link>https://skyporta.com</link>
+    <description>Global leaders in air and land cargo logistics. Secure, efficient, and reliable freight transportation worldwide.</description>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 11 Nov 2025 00:00:00 GMT</lastBuildDate>
+    
+    <item>
+      <title>SkyPorta - Your Trusted Cargo Partner</title>
+      <link>https://skyporta.com/#home</link>
+      <description>SkyPorta delivers secure, efficient, and reliable freight transportation worldwide. Professional air and land cargo logistics services.</description>
+      <pubDate>Wed, 11 Nov 2025 00:00:00 GMT</pubDate>
+      <category>Cargo</category>
+      <category>Logistics</category>
+    </item>
+    
+    <item>
+      <title>Professional Air Cargo Services</title>
+      <link>https://skyporta.com/#services</link>
+      <description>Efficient bulk freight transport across continents with speed and precision. SkyPorta's air cargo services.</description>
+      <pubDate>Wed, 11 Nov 2025 00:00:00 GMT</pubDate>
+      <category>Services</category>
+    </item>
+    
+    <item>
+      <title>Land Transportation & Express Delivery</title>
+      <link>https://skyporta.com/#services</link>
+      <description>On-demand ground transport for high-value goods and regional delivery solutions. SkyPorta's land logistics.</description>
+      <pubDate>Wed, 11 Nov 2025 00:00:00 GMT</pubDate>
+      <category>Services</category>
+    </item>
+    
+  </channel>
+</rss>

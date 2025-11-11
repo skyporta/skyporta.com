@@ -1,0 +1,33 @@
+# Robots.txt for SkyPorta
+# Allow all search engines to crawl the site
+User-agent: *
+Allow: /
+
+# Disallow admin and system directories (if any)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /system/
+
+# Crawl delay (optional - allow fast crawling)
+Crawl-delay: 1
+
+# Sitemap location for search engines
+Sitemap: https://skyporta.com/sitemap.xml
+Sitemap: https://skyporta.com/sitemap-news.xml
+
+# Allow specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Block bad bots
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
