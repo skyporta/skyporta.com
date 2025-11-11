@@ -55,6 +55,8 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <!-- Google Translate widget placeholder -->
+      <div id="google_translate_element" class="translate-widget" aria-hidden="false"></div>
       <div class="mobile-menu-toggle">
         <i class="fas fa-bars"></i>
       </div>
@@ -288,7 +290,20 @@
   </footer>
 
   <!-- Load Animations (only once) -->
+</body>
+</html>
   <script src="animation.js" defer></script>
+
+  <!-- Google Translate -->
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 
 </body>
 </html>

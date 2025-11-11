@@ -530,3 +530,101 @@ console.log('✈️ SkyPorta animations loaded successfully!');
     document.head.appendChild(link);
   });
 })();
+
+// ========== LAPTOP ICON ANIMATIONS (techno-pop live icons) ==========
+(function(){
+  // Only run on laptops and when GSAP is available
+  if (!document.documentElement.classList.contains('platform-laptop')) return;
+  if (!window.gsap) return;
+
+  // Helper to safely select
+  function q(sel){ return document.querySelector(sel); }
+  function qAll(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+  const plane = q('.fa-plane');
+  const truck = q('.fa-truck');
+  const car = q('.fa-car');
+  const warehouse = q('.fa-warehouse');
+  const box = q('.fa-box');
+  const icons = qAll('.service-icon');
+
+    // No CSS glow: keep icons plain (color handled via CSS)
+
+  try {
+    if (plane) {
+      gsap.to(plane, {
+        x: 40,
+        y: -18,
+        rotation: 12,
+        duration: 1.6,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        overwrite: 'auto'
+      });
+    }
+
+    if (truck) {
+      // subtle roll and move to simulate wheels rolling
+      gsap.to(truck, {
+        x: 18,
+        rotation: 6,
+        duration: 0.8,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+        overwrite: 'auto'
+      });
+    }
+
+    if (car) {
+      gsap.to(car, {
+        y: -8,
+        rotation: 4,
+        duration: 1,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true,
+        overwrite: 'auto'
+      });
+    }
+
+    if (warehouse) {
+      gsap.to(warehouse, {
+        scale: 1.06,
+        duration: 1.4,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true,
+        transformOrigin: '50% 50%'
+      });
+    }
+
+    if (box) {
+      gsap.to(box, {
+        rotation: 6,
+        y: -6,
+        duration: 0.9,
+        ease: 'sine.inOut',
+        repeat: -1,
+        yoyo: true
+      });
+    }
+
+    // Pause icon animations on hover over the service card to let users focus
+    qAll('.service-card').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+          // Emphasize icon without clearing animations
+          gsap.to(card.querySelectorAll('.service-icon, .service-icon i'), { scale: 1.12, duration: 0.22, overwrite: 'auto' });
+      });
+      card.addEventListener('mouseleave', () => {
+          // Gently return icon scale to normal
+          gsap.to(card.querySelectorAll('.service-icon, .service-icon i'), { scale: 1, duration: 0.22, overwrite: 'auto' });
+      });
+    });
+
+  } catch (err) {
+    console.warn('Icon animations failed to initialize', err);
+  }
+
+})();

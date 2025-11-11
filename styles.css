@@ -197,6 +197,18 @@ body {
   align-items: center;
 }
 
+/* Small styling for Google Translate widget placed in the header */
+.translate-widget {
+  margin-left: 12px;
+  color: white;
+  font-size: 0.95rem;
+}
+.translate-widget .goog-te-combo {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: none;
+}
+
 .logo {
   font-size: 1.8rem;
   font-weight: 700;
@@ -277,6 +289,29 @@ body {
 }
 .platform-laptop .nav a:after {
   height: 3px;
+}
+
+/* Techno-pop laptop icon styles and accents */
+/* Laptop icon styles (simple, non-glowing, black icons) */
+.platform-laptop .service-icon {
+  font-size: 3.2rem;
+  color: #000;
+  background: none;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial;
+  background-clip: initial;
+  filter: none;
+  transition: transform 220ms ease;
+}
+
+/* Desktop hover - subtle lift only (no glow) */
+.platform-laptop .service-card:hover .service-icon {
+  transform: translateY(-4px) scale(1.04);
+}
+
+/* Small motion-safe fallback: if user prefers reduced motion, keep icons static */
+@media (prefers-reduced-motion: reduce) {
+  .platform-laptop .service-icon { transition: none; transform: none !important; }
 }
 
 /* Ensure mobile menu toggle style adjusts per platform for better touch affordance */
