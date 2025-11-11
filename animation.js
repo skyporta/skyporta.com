@@ -298,3 +298,160 @@ window.addEventListener('load', () => {
 });
 
 console.log('✈️ SkyPorta animations loaded successfully!');
+
+// ========== PLATFORM DETECTION (adds platform-android / platform-ios / platform-desktop class) ==========
+(function(){
+  try {
+    const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+    let platformClass = 'platform-desktop';
+
+    if (/android/i.test(ua)) {
+      platformClass = 'platform-android';
+    } else if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+      // iPadOS desktops can present as MacIntel; maxTouchPoints check helps detect touch iOS devices
+      platformClass = 'platform-ios';
+    }
+
+    document.documentElement.classList.add(platformClass);
+
+    // Add a desktop class also when viewport is wide (laptop) for convenience
+    function updateViewportClass(){
+      if(window.innerWidth >= 992) document.documentElement.classList.add('platform-laptop');
+      else document.documentElement.classList.remove('platform-laptop');
+    }
+
+    window.addEventListener('resize', updateViewportClass);
+    updateViewportClass();
+
+  } catch (err) {
+    // fail silently — platform detection is progressive enhancement
+    console.warn('Platform detection failed', err);
+  }
+})();
+
+// ========== HERO BACKGROUND SLIDER (crossfade + subtle slide) ==========
+(function(){
+  const layerA = document.querySelector('.hero-bg-layer.layer1');
+  const layerB = document.querySelector('.hero-bg-layer.layer2');
+  if(!layerA || !layerB) return;
+
+  // 6-image carousel with smooth thin transitions
+  const images = [
+    'https://tse3.mm.bing.net/th/id/OIP.YZB_8i2dIS5ojq6tZhr6qQAAAA?cb=ucfimg2ucfimg=1&w=400&h=400&rs=1&pid=ImgDetMain&o=7&rm=3',
+    'https://tse1.mm.bing.net/th/id/OIP.zjV4dqjyjpq12cZll6pDfQHaE8?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
+    'https://tse2.mm.bing.net/th/id/OIP.bdewkyhdV_u3CRZFB3nCMQHaE9?cb=ucfimg2ucfimg=1&rs=1&pid=ImgDetMain&o=7&rm=3',
+    'https://th.bing.com/th/id/OIP.4e8G1uLC4OZOa4Hnwu2haQHaEk?w=275&h=180&c=7&r=0&o=7&cb=ucfimg2&pid=1.7&rm=3&ucfimg=1',
+    'https://th.bing.com/th/id/OIP.EAguZn8BdgPHsFYvqfEmWQHaEK?w=282&h=180&c=7&r=0&o=7&cb=ucfimg2&pid=1.7&rm=3&ucfimg=1',
+    'https://media.istockphoto.com/photos/cargo-airplane-picture-id547048012?k=6&m=547048012&s=612x612&w=0&h=HEht5CNj27F4gPy_eLqKhFguZ_UCQufIecYkMInyX64='
+  ];
+
+  let current = 0;
+  const layers = [layerA, layerB];
+  const heroSection = document.querySelector('.hero');
+
+  // Initialize with first image
+  layers[0].style.backgroundImage = `url('${images[0]}')`;
+  layers[0].style.opacity = 1;
+  layers[1].style.opacity = 0;
+  
+  // Set initial image index class for font styling
+  if (heroSection) {
+    heroSection.className = heroSection.className.replace(/image-\d+/g, '');
+    // use 1-based image classes to match user preference (image-1..image-6)
+    heroSection.classList.add('image-1');
+  }
+
+  // Timing: 5 sec per image, 0.8 sec transition (thin fade)
+  const DISPLAY_TIME = 5000;
+  const TRANSITION_TIME = 800;
+
+  // Helper: set the active thumbnail visual state (expects 1-based index)
+  function setActiveThumb(oneBasedIndex) {
+    const thumbs = document.querySelectorAll('.hero-thumb');
+    thumbs.forEach(t => t.classList.remove('active'));
+    const sel = document.querySelector(`.hero-thumb[data-index="${oneBasedIndex}"]`);
+    if (sel) sel.classList.add('active');
+  }
+
+  // Transition to a specific image index (0-based)
+  function transitionTo(nextIndex) {
+    // Guard
+    if (nextIndex === current) return;
+
+    // Set next image on top layer
+    layers[1].style.backgroundImage = `url('${images[nextIndex]}')`;
+
+    // Smooth thin crossfade
+    if (window.gsap) {
+      gsap.to(layers[0], { opacity: 0, duration: TRANSITION_TIME / 1000, ease: 'sine.inOut' });
+      gsap.to(layers[1], { opacity: 1, duration: TRANSITION_TIME / 1000, ease: 'sine.inOut' });
+    } else {
+      layers[0].style.transition = `opacity ${TRANSITION_TIME / 1000}s ease-in-out`;
+      layers[1].style.transition = `opacity ${TRANSITION_TIME / 1000}s ease-in-out`;
+      layers[0].style.opacity = 0;
+      layers[1].style.opacity = 1;
+    }
+
+    // After transition, swap the images and update state
+    setTimeout(() => {
+      layers[0].style.backgroundImage = `url('${images[nextIndex]}')`;
+      layers[0].style.opacity = 1;
+      layers[1].style.opacity = 0;
+      current = nextIndex;
+
+      // Update image index class for dynamic font styling (1-based)
+      if (heroSection) {
+        heroSection.className = heroSection.className.replace(/image-\d+/g, '');
+        heroSection.classList.add(`image-${nextIndex + 1}`);
+      }
+
+      // update active thumbnail
+      setActiveThumb(nextIndex + 1);
+    }, TRANSITION_TIME);
+  }
+
+  // Auto-advance scheduling
+  let autoTimer = null;
+  function scheduleAuto() {
+    if (autoTimer) clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+      transitionTo((current + 1) % images.length);
+    }, DISPLAY_TIME + TRANSITION_TIME);
+  }
+
+  // start auto rotation
+  scheduleAuto();
+
+  // Wire up thumbnail interactions
+  const thumbs = document.querySelectorAll('.hero-thumb');
+  if (thumbs && thumbs.length) {
+    thumbs.forEach(t => {
+        t.addEventListener('click', (e) => {
+          const idx = Math.max(0, parseInt(t.dataset.index || '1', 10) - 1);
+          if (isNaN(idx)) return;
+          // Manual transition without disabling auto-rotation: transition now and restart auto timer so it continues
+          transitionTo(idx);
+          // restart auto-rotation cycle so the carousel keeps moving on its own
+          if (autoTimer) clearInterval(autoTimer);
+          scheduleAuto();
+        });
+
+      // keyboard accessibility (Enter / Space triggers click)
+      t.addEventListener('keydown', (ev) => {
+        if (ev.key === 'Enter' || ev.key === ' ') {
+          ev.preventDefault();
+          t.click();
+        }
+      });
+    });
+  }
+
+  // Preload all images for smoother carousel
+  images.forEach(img => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = img;
+    document.head.appendChild(link);
+  });
+})();
