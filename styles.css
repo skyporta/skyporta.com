@@ -974,6 +974,20 @@ h2:after {
     max-height: 300px;
   }
 
+  /* Center and style hero text on mobile */
+  .hero-text {
+    text-align: center;
+  }
+
+  .hero-text p {
+    font-family: 'Pacifico', cursive;
+    font-size: 0.95rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 700px;
+    line-height: 1.5;
+  }
+
   /* Reduce thumbnail size on tablet/small screens */
   .hero-thumb { width: 64px; height: 40px; }
 }
@@ -1046,6 +1060,13 @@ h2:after {
   .social-links a {
     font-size: 0.8rem;
     padding: 0.4rem 0.6rem;
+  }
+
+  /* Extra reduction and cursive font for very small screens */
+  .hero-text p {
+    font-size: 0.88rem;
+    max-width: 92%;
+    letter-spacing: 0.3px;
   }
 
   .contact-note {
