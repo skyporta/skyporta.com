@@ -158,6 +158,8 @@ body {
 /* Hide welcome overlay when dismissed */
 .welcome-overlay.hidden {
   animation: fadeOutOverlay 0.4s ease-out forwards;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 @keyframes fadeOutOverlay {

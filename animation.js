@@ -4,57 +4,77 @@ gsap.registerPlugin(ScrollTrigger);
 
 // ========== WELCOME GREETING OVERLAY ==========
 (function(){
-  const overlay = document.getElementById('welcomeOverlay');
-  const closeBtn = document.getElementById('welcomeClose');
-  const startBtn = document.getElementById('welcomeBtn');
-
-  if(!overlay) return;
-
-  // Check if user has already seen the welcome (using sessionStorage for this session only)
-  const hasSeenWelcome = sessionStorage.getItem('skyporta_welcome_shown');
-
-  if(!hasSeenWelcome) {
-    // Show the overlay on first load
-    overlay.classList.remove('hidden');
-    sessionStorage.setItem('skyporta_welcome_shown', 'true');
+  // Wait for DOM to be fully loaded
+  if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWelcome);
   } else {
-    // Hide it if already shown this session
-    overlay.classList.add('hidden');
+    initWelcome();
   }
 
-  // Only close when user clicks "Let's Get Started" button
-  function closeWelcome() {
-    overlay.classList.add('hidden');
-    // After animation completes, remove from DOM for cleaner memory
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 400);
+  function initWelcome() {
+    const overlay = document.getElementById('welcomeOverlay');
+    const closeBtn = document.getElementById('welcomeClose');
+    const startBtn = document.getElementById('welcomeBtn');
+
+    if(!overlay || !closeBtn || !startBtn) {
+      console.warn('Welcome overlay elements not found');
+      return;
+    }
+
+    // Check if user has already seen the welcome (using sessionStorage for this session only)
+    const hasSeenWelcome = sessionStorage.getItem('skyporta_welcome_shown');
+
+    if(!hasSeenWelcome) {
+      // Show the overlay on first load
+      overlay.classList.remove('hidden');
+      sessionStorage.setItem('skyporta_welcome_shown', 'true');
+      console.log('Welcome overlay shown');
+    } else {
+      // Keep it hidden if already shown this session
+      overlay.classList.add('hidden');
+      console.log('Welcome overlay already shown this session');
+    }
+
+    // Only close when user clicks "Let's Get Started" button
+    function closeWelcome(e) {
+      if(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      overlay.classList.add('hidden');
+      // After animation completes, remove from DOM for cleaner memory
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 400);
+    }
+
+    startBtn.addEventListener('click', closeWelcome);
+
+    // Disable close button visually
+    closeBtn.style.cursor = 'not-allowed';
+    closeBtn.style.opacity = '0.4';
+    closeBtn.style.pointerEvents = 'none';
+
+    // Prevent closing by clicking outside
+    overlay.addEventListener('click', (e) => {
+      if(e.target === overlay) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+
+    // Prevent closing with Escape key
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      }
+    });
+
+    console.log('Welcome overlay initialized');
   }
-
-  startBtn.addEventListener('click', closeWelcome);
-
-  // Disable close button and outside clicks - user MUST click "Let's Get Started"
-  // Remove close button functionality and prevent outside clicks
-  closeBtn.style.cursor = 'not-allowed';
-  closeBtn.style.opacity = '0.5';
-  closeBtn.disabled = true;
-
-  // Prevent closing by clicking outside
-  overlay.addEventListener('click', (e) => {
-    if(e.target === overlay) {
-      // Do nothing - user must click the button
-      e.preventDefault();
-      e.stopPropagation();
-    }
-  });
-
-  // Prevent closing with Escape key
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-      e.preventDefault();
-      // Do nothing - user must click the button
-    }
-  });
 })();
 
 // ========== HERO SECTION ANIMATIONS ==========
