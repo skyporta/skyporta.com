@@ -22,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
     overlay.classList.add('hidden');
   }
 
-  // Close button handler
+  // Only close when user clicks "Let's Get Started" button
   function closeWelcome() {
     overlay.classList.add('hidden');
     // After animation completes, remove from DOM for cleaner memory
@@ -31,20 +31,28 @@ gsap.registerPlugin(ScrollTrigger);
     }, 400);
   }
 
-  closeBtn.addEventListener('click', closeWelcome);
   startBtn.addEventListener('click', closeWelcome);
 
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if(e.key === 'Escape' && !overlay.classList.contains('hidden')) {
-      closeWelcome();
+  // Disable close button and outside clicks - user MUST click "Let's Get Started"
+  // Remove close button functionality and prevent outside clicks
+  closeBtn.style.cursor = 'not-allowed';
+  closeBtn.style.opacity = '0.5';
+  closeBtn.disabled = true;
+
+  // Prevent closing by clicking outside
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) {
+      // Do nothing - user must click the button
+      e.preventDefault();
+      e.stopPropagation();
     }
   });
 
-  // Close when clicking outside the modal
-  overlay.addEventListener('click', (e) => {
-    if(e.target === overlay) {
-      closeWelcome();
+  // Prevent closing with Escape key
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+      e.preventDefault();
+      // Do nothing - user must click the button
     }
   });
 })();
